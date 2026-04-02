@@ -1,0 +1,23 @@
+{
+  "name": "oh-my-buddy",
+  "owner": {
+    "name": "anjieyang",
+    "url": "https://github.com/anjieyang"
+  },
+  "metadata": {
+    "description": "Supercharge your Claude Code buddy with personality, XP, achievements, and chaos",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "oh-my-buddy",
+      "description": "Personality-driven buddy reactions, XP progression, achievements, commit garden, and chaos-fueled rage meters. 18 species, 5 stats, every buddy feels different.",
+      "author": {
+        "name": "anjieyang"
+      },
+      "source": "./plugins/oh-my-buddy",
+      "category": "fun",
+      "homepage": "https://github.com/anjieyang/oh-my-buddy"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "name": "oh-my-buddy",
+  "version": "1.0.0",
+  "description": "Supercharge your Claude Code buddy with personality, XP, achievements, and chaos",
+  "type": "module",
+  "author": "anjieyang",
+  "license": "MIT",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "setup": "node setup.js"
+  }
+}

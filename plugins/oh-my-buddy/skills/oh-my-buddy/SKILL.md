@@ -1,7 +1,7 @@
 ---
 name: oh-my-buddy
 description: Show your buddy's profile, stats, level, achievements, garden, and session status. Use when the user wants to see their buddy or check progress.
-user_invocable: true
+user-invocable: true
 ---
 
 # Oh My Buddy

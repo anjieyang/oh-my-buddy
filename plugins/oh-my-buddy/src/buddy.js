@@ -76,7 +76,7 @@ export function rollRarity(rng) {
   let roll = rng() * total;
   for (const rarity of RARITIES) {
     roll -= RARITY_WEIGHTS[rarity];
-    if (roll <= 0) return rarity;
+    if (roll < 0) return rarity;
   }
   return RARITIES[RARITIES.length - 1];
 }
@@ -160,9 +160,11 @@ export function loadBuddy() {
   const userId = detectUserId();
   if (userId) {
     const bones = rollBuddy(userId);
+    const soul = readCompanionSoul();
     const buddy = {
       ...bones,
-      name: bones.species.charAt(0).toUpperCase() + bones.species.slice(1),
+      name: soul?.name || bones.species.charAt(0).toUpperCase() + bones.species.slice(1),
+      personality: soul?.personality || null,
       detectedAt: new Date().toISOString().split('T')[0],
     };
     // Save for next time
@@ -183,10 +185,10 @@ export function loadBuddy() {
  * Returns a string ID or null. Never throws.
  */
 export function detectUserId() {
-  const claudeDir = join(homedir(), '.claude');
   const candidates = [
-    join(claudeDir, '.credentials.json'),
-    join(claudeDir, 'config.json'),
+    join(homedir(), '.claude.json'),           // Main Claude Code config
+    join(homedir(), '.claude', '.credentials.json'),
+    join(homedir(), '.claude', 'config.json'),
   ];
 
   for (const filePath of candidates) {
@@ -203,5 +205,18 @@ export function detectUserId() {
     }
   }
 
+  return null;
+}
+
+/**
+ * Read the stored companion soul (name, personality) from Claude Code's config.
+ * Returns { name, personality } or null.
+ */
+export function readCompanionSoul() {
+  try {
+    const raw = readFileSync(join(homedir(), '.claude.json'), 'utf8');
+    const data = JSON.parse(raw);
+    if (data?.companion?.name) return data.companion;
+  } catch {}
   return null;
 }

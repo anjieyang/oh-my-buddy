@@ -310,9 +310,9 @@ async function main() {
     let additionalContext = '';
 
     // First-run onboarding: show hatching message
-    if (buddy._firstRun) {
+    if (hookEventName === 'PostToolUse' && buddy._firstRun) {
       const onboarding = buildOnboarding(buddy);
-      respond(hookEventName || 'PostToolUse', onboarding);
+      respond(hookEventName, onboarding);
       return;
     }
 

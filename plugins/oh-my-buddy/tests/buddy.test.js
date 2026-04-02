@@ -378,8 +378,11 @@ describe('rollBuddy', () => {
 
 describe('loadBuddy', () => {
   test('returns fallback when file is missing', () => {
-    // BUDDY_CONFIG_FILE does not exist at this point
+    // Override HOME so detectUserId can't find ~/.claude.json
+    const origHome = process.env.HOME;
+    process.env.HOME = BUDDY_CONFIG_DIR;
     const b = loadBuddy();
+    process.env.HOME = origHome;
     assert.equal(b.species, 'blob');
     assert.equal(b.name, 'Mystery');
     assert.equal(b.rarity, 'common');
@@ -389,7 +392,10 @@ describe('loadBuddy', () => {
   });
 
   test('fallback has correct stats shape', () => {
+    const origHome = process.env.HOME;
+    process.env.HOME = BUDDY_CONFIG_DIR;
     const b = loadBuddy();
+    process.env.HOME = origHome;
     assert.deepEqual(b.stats, {
       chaos: 50,
       snark: 50,
@@ -419,7 +425,10 @@ describe('loadBuddy', () => {
 
   test('returns fallback when file is corrupt JSON', () => {
     writeFileSync(BUDDY_CONFIG_FILE, '{ BAD JSON !!!', 'utf8');
+    const origHome = process.env.HOME;
+    process.env.HOME = BUDDY_CONFIG_DIR;
     const b = loadBuddy();
+    process.env.HOME = origHome;
     assert.equal(b.species, 'blob');
   });
 });

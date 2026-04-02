@@ -1,7 +1,7 @@
 {
   "name": "oh-my-buddy",
   "description": "Supercharge your Claude Code buddy with personality-driven reactions, XP progression, achievements, a commit garden, and chaos-fueled rage meters. Each of the 18 buddy species feels uniquely alive based on their real stats.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": {
     "name": "anjieyang"
   }

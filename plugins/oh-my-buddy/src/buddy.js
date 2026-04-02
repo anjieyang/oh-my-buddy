@@ -149,7 +149,9 @@ export function loadBuddy() {
   // Try reading existing config
   try {
     const raw = readFileSync(configPath, 'utf8');
-    return JSON.parse(raw);
+    const buddy = JSON.parse(raw);
+    buddy._firstRun = false;
+    return buddy;
   } catch {
     // Not found — try auto-detecting from account ID
   }
@@ -168,9 +170,11 @@ export function loadBuddy() {
       mkdirSync(dirname(configPath), { recursive: true });
       writeFileSync(configPath, JSON.stringify(buddy, null, 2));
     } catch { /* best effort */ }
+    buddy._firstRun = true;
     return buddy;
   }
 
+  fallback._firstRun = true;
   return fallback;
 }
 

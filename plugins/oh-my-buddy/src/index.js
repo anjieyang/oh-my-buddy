@@ -19,7 +19,7 @@ import { checkAchievements, renderNewAchievements } from './achievements.js';
 import { growGarden, plantSeed, getGardenDisplay } from './garden.js';
 import { renderLevelUp, renderSessionSummary } from './render.js';
 import { loadBuddy } from './buddy.js';
-import { shouldSpeak, buildContext } from './personality.js';
+import { shouldSpeak, buildContext, buildOnboarding } from './personality.js';
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -308,6 +308,13 @@ async function main() {
     let state = loadState();
     const buddy = loadBuddy();
     let additionalContext = '';
+
+    // First-run onboarding: show hatching message
+    if (buddy._firstRun) {
+      const onboarding = buildOnboarding(buddy);
+      respond(hookEventName || 'PostToolUse', onboarding);
+      return;
+    }
 
     if (hookEventName === 'PostToolUse') {
       additionalContext = await handlePostToolUse(event, state, buddy);

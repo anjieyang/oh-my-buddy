@@ -382,3 +382,44 @@ export function buildContext(eventType, buddy, state, extra = {}) {
 
   return lines.join('\n');
 }
+
+export function buildOnboarding(buddy) {
+  const emoji = SPECIES_EMOJI[buddy.species] || '❓';
+  const speciesCapital = buddy.species.charAt(0).toUpperCase() + buddy.species.slice(1);
+  const rarity = buddy.rarity.charAt(0).toUpperCase() + buddy.rarity.slice(1);
+  const stars = { common: '★', uncommon: '★★', rare: '★★★', epic: '★★★★', legendary: '★★★★★' };
+
+  const statBar = (name, val) => {
+    const filled = Math.round(val / 10);
+    return `  ${name.padEnd(10)} ${'█'.repeat(filled)}${'░'.repeat(10 - filled)} ${val}`;
+  };
+
+  return [
+    '',
+    `🥚 An egg is cracking...`,
+    '',
+    `    _*_`,
+    `   / ^.^ \\`,
+    `  | /| |\\  |`,
+    `  |/ | | \\|`,
+    `   \\__~__/`,
+    '',
+    `🎉 Your buddy has hatched!`,
+    '',
+    `${emoji} Meet ${buddy.name} the ${speciesCapital}!`,
+    `━━━━━━━━━━━━━━━━━━━━━━━━━━━━`,
+    `Rarity: ${stars[buddy.rarity] || '★'} ${rarity}${buddy.shiny ? ' ✨ SHINY!' : ''}`,
+    `Eyes: ${buddy.eye}  Hat: ${buddy.hat}`,
+    '',
+    `📊 Personality Stats`,
+    statBar('CHAOS', buddy.stats.chaos),
+    statBar('SNARK', buddy.stats.snark),
+    statBar('WISDOM', buddy.stats.wisdom),
+    statBar('PATIENCE', buddy.stats.patience),
+    statBar('DEBUGGING', buddy.stats.debugging),
+    '',
+    `Your buddy is ready! Start coding and watch them grow.`,
+    `Run /oh-my-buddy anytime to check your buddy's progress.`,
+    '',
+  ].join('\n');
+}

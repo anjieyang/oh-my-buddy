@@ -916,7 +916,7 @@ describe('PATIENCE affects rage buildup', () => {
 describe('fallback buddy (no buddy.json)', () => {
   beforeEach(() => resetState());
 
-  test('missing buddy.json uses fallback blob profile', () => {
+  test('missing buddy.json triggers onboarding', () => {
     // Point to a non-existent buddy config
     const result = runHook(
       {
@@ -928,9 +928,8 @@ describe('fallback buddy (no buddy.json)', () => {
       { BUDDY_CONFIG_PATH: join(tmpBase, 'nonexistent-buddy.json') }
     );
     const ctx = result.hookSpecificOutput.additionalContext;
-    // Fallback buddy is species=blob, name=Mystery
-    assert.ok(ctx.includes('Mystery the blob'), 'expected fallback blob buddy');
-    assert.ok(ctx.includes('RAGE'), 'expected rage meter in fallback context');
+    // First run shows onboarding hatching message
+    assert.ok(ctx.includes('hatched') || ctx.includes('Mystery'), 'expected onboarding or fallback buddy');
   });
 });
 

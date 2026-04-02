@@ -1,5 +1,5 @@
 ---
-name: oh-my-buddy
+name: buddy-status
 description: Show your buddy's profile, stats, level, achievements, garden, and session status. Use when the user wants to see their buddy or check progress.
 user-invocable: true
 ---
